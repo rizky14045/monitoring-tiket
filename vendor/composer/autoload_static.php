@@ -568,6 +568,7 @@ class ComposerStaticInit7d6d850bf288fd8bfaf405124573ef57
         'App\\Http\\Middleware\\VerifyCsrfToken' => __DIR__ . '/../..' . '/app/Http/Middleware/VerifyCsrfToken.php',
         'App\\Imports\\MonitoringImport' => __DIR__ . '/../..' . '/app/Imports/MonitoringImport.php',
         'App\\Models\\Monitoring' => __DIR__ . '/../..' . '/app/Models/Monitoring.php',
+        'App\\Models\\ServiceFamily' => __DIR__ . '/../..' . '/app/Models/ServiceFamily.php',
         'App\\Models\\User' => __DIR__ . '/../..' . '/app/Models/User.php',
         'App\\Providers\\AppServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AppServiceProvider.php',
         'App\\Providers\\AuthServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AuthServiceProvider.php',

@@ -36,6 +36,12 @@
                         <span> Monitoring </span>
                     </a>
                 </li>
+                <li>
+                    <a href="{{route('dashboard.report')}}" class="tp-link">
+                        <i data-feather="table"></i>
+                        <span> Report </span>
+                    </a>
+                </li>
                 
                 
             </ul>

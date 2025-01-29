@@ -23,6 +23,11 @@
                 <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">Import Excel</button>
             </div>
             <div class="card-body">
+                @if(session()->has('success'))
+                    <div class="alert alert-success">
+                        {{ session()->get('success') }}
+                    </div>
+                @endif
                 <div class="table-responsive">
                     <table class="table table-bordered table-striped mb-5">
                         <thead>
@@ -36,13 +41,20 @@
                                 <th scope="col" class="text-center align-middle">Service Type</th>
                                 <th scope="col" class="text-center align-middle">Ticket Created On</th>
                                 <th scope="col" class="text-center align-middle">Task Assign To</th>
+                                <th scope="col" class="text-center align-middle">Keterangan</th>
                                 <th scope="col" class="text-center align-middle">Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($monitorings as $monitoring)
+                            @php
+                                $perPage = $monitorings->perPage(); // Jumlah item per halaman
+                                $currentPage = $monitorings->currentPage(); // Halaman saat ini
+                                $startNumber = ($currentPage - 1) * $perPage + 1; // Nomor awal untuk halaman saat ini
+                            @endphp
+
+                            @foreach ($monitorings as $key => $monitoring)
                                 <tr class="text-center">
-                                    <td>{{$loop->iteration}}</td>
+                                    <td>{{ $startNumber + $key }}</td>
                                     <td>{{$monitoring->incident}}</td>
                                     <td>{{$monitoring->priority_name}}</td>
                                     <td>{{$monitoring->summary}}</td>
@@ -51,8 +63,17 @@
                                     <td>{{$monitoring->service_type}}</td>
                                     <td>{{$monitoring->ticket_created_at}}</td>
                                     <td>{{$monitoring->task_assign_to}}</td>
+                                    <td>{{$monitoring->note}}</td>
                                     <td>
-                                        <a href="#" class="btn btn-danger btn-sm">Delete</a>
+                                        <div class="d-flex gap-2">
+
+                                            <a href="{{route('monitoring.edit',['id' => $monitoring->id])}}" class="btn btn-warning btn-sm">Edit</a>
+                                            <form action="{{route('monitoring.destroy',['id'=>$monitoring->id])}}" method="POST">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-danger btn-sm">delete</button>
+                                            </form>
+                                        </div>
                                     </td>
                                 </tr>
                             @endforeach

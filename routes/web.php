@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Monitoring;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\MonitoringController;
@@ -22,8 +23,17 @@ Route::get('/register', function () {
     return view('user.register');
 });
 Route::get('/', [DashboardController::class, 'index'])->name('dashboard.index');
+Route::get('/report', [DashboardController::class, 'report'])->name('dashboard.report');
 Route::prefix('monitoring')->group(function () {
     Route::get('/', [MonitoringController::class, 'index'])->name('monitoring.index');
+    Route::get('/edit/{id}', [MonitoringController::class, 'edit'])->name('monitoring.edit');
+    Route::patch('/edit/{id}', [MonitoringController::class, 'update'])->name('monitoring.update');
+    Route::delete('/destroy/{id}', [MonitoringController::class, 'destroy'])->name('monitoring.destroy');
     Route::post('/import', [MonitoringController::class, 'import'])->name('monitoring.import');
     
+});
+
+Route::get('/truncate', function () {
+    Monitoring::truncate();
+    return redirect()->route('monitoring.index')->with('success', 'Monitoring berhasil di hapus');
 });

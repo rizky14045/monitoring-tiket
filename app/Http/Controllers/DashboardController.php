@@ -19,12 +19,6 @@ class DashboardController extends Controller
             $endDate = Carbon::parse($request->end_date)->endOfDay(); // 23:59:59
         
             $monitoring = Monitoring::whereBetween('ticket_created_at', [$startDate, $endDate])
-                ->when($request->filled('status'), function ($query) use ($request) {
-                    return $query->where('status', $request->status);
-                })
-                ->when($request->filled('service_family'), function ($query) use ($request) {
-                    return $query->where('service_family', $request->service_family);
-                })
                 ->get();
         
             // Group by tanggal dan count data
@@ -45,5 +39,20 @@ class DashboardController extends Controller
             $data['chartValues'] = [];
         }
         return view('user.dashboard',$data);
+    }
+
+    public function report(Request $request){
+        
+        $data =[];
+        if ($request->has('start_date') && $request->has('end_date')) {
+            // Ubah start_date dan end_date agar mencakup waktu
+            $startDate = Carbon::parse($request->start_date)->startOfDay(); // 00:00:00
+            $endDate = Carbon::parse($request->end_date)->endOfDay(); // 23:59:59
+        
+            $monitorings = Monitoring::whereBetween('ticket_created_at', [$startDate, $endDate])
+                ->get();
+            $data['monitorings'] = $monitorings;
+        }
+        return view('user.report',$data);
     }
 }

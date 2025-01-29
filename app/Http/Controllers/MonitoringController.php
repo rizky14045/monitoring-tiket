@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use Excel;
 use App\Models\Monitoring;
 use Illuminate\Http\Request;
-use Excel;
+use App\Models\ServiceFamily;
 use App\Imports\MonitoringImport;
 use App\Http\Controllers\Controller;
 
@@ -33,14 +34,38 @@ class MonitoringController extends Controller
         }
 
     }
-    public function edit() {
+    public function edit($id) {
+        $data['monitoring'] = Monitoring::where('id',$id)->first();
+        $data['families'] = ServiceFamily::all();
+        return view('user.monitoring.edit',$data);
 
     }
-    public function update() {
+    public function update(Request $request,$id) {
 
+        try {
+            Monitoring::where('id',$id)->update([
+                'priority_name' => $request->priority_name,
+                'summary' => $request->summary,
+                'status' => $request->status,
+                'service_family' => $request->service_family,
+                'service_type' => $request->service_type,
+                'ticket_created_at' => $request->ticket_created_at,
+                'task_assign_to' => $request->task_assign_to,
+                'note' => $request->note,
+            ]);
+            return redirect()->route('monitoring.index')->with('success', 'monitoring berhasil diupdate');
+        } catch (\Throwable $th) {
+            throw $th;
+        }
+   
     }
-    public function destroy() {
-
+    public function destroy($id) {
+        try {
+            Monitoring::where('id',$id)->delete();
+            return redirect()->route('monitoring.index')->with('success', 'monitoring berhasil dihapus');
+        } catch (\Throwable $th) {
+            throw $th;
+        }
     }
 
 }
