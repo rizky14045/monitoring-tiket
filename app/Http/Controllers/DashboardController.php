@@ -19,7 +19,9 @@ class DashboardController extends Controller
             $endDate = Carbon::parse($request->end_date)->endOfDay(); // 23:59:59
         
             $monitoring = Monitoring::whereBetween('ticket_created_at', [$startDate, $endDate])
-                ->get();
+            ->where('status', $request->status)
+            ->where('service_family', $request->service_family)
+            ->get();
         
             // Group by tanggal dan count data
             $grouped = $monitoring->groupBy(function ($item) {
