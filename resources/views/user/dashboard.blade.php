@@ -66,7 +66,7 @@
 
                 <br>
                 <div class="d-flex justify-content-center">
-                    <div class="col-md-6 w-50">
+                    <div class="col-12 col-md-9">
                         <p class="text-center fw-bold">Monitoring Ticket</p>
                         <canvas id="chart_1"></canvas>
                     </div>
