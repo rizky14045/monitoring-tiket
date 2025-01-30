@@ -53,9 +53,11 @@
                         <div class="mb-3 col-md-2">
                             <label for="exampleInputPassword1" class="form-label">Service Family</label>
                             <select class="form-control select-2" aria-label="Default select example" name="service_family[]" required multiple>
-                              @foreach ($services as $service)
-                                <option value="{{$service->name}}" {{in_array($service->name,request('service_family')) ? 'selected' : ''}}>{{$service->name}}</option> 
-                              @endforeach
+                                @foreach ($services as $service)
+                                    <option value="{{$service->name}}" {{ in_array($service->name, request('service_family', [])) ? 'selected' : '' }}>
+                                        {{$service->name}}
+                                    </option> 
+                                @endforeach
                             </select>
                         </div>
                         <div class="mb-3 col-md-2 pt-4">
