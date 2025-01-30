@@ -20,7 +20,7 @@ class DashboardController extends Controller
         
             $monitoring = Monitoring::whereBetween('ticket_created_at', [$startDate, $endDate])
             ->where('status', $request->status)
-            ->where('service_family', $request->service_family)
+            ->whereIn('service_family', $request->service_family)
             ->get();
         
             // Group by tanggal dan count data
