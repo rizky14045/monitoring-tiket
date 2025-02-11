@@ -41,6 +41,8 @@
                                 <th scope="col" class="text-center align-middle">Service Type</th>
                                 <th scope="col" class="text-center align-middle">Ticket Created On</th>
                                 <th scope="col" class="text-center align-middle">Task Assign To</th>
+                                <th scope="col" class="text-center align-middle">Task Modified On</th>
+                                <th scope="col" class="text-center align-middle">Durasi</th>
                                 <th scope="col" class="text-center align-middle">Keterangan</th>
                                 <th scope="col" class="text-center align-middle">Action</th>
                             </tr>
@@ -63,6 +65,18 @@
                                     <td>{{$monitoring->service_type}}</td>
                                     <td>{{$monitoring->ticket_created_at}}</td>
                                     <td>{{$monitoring->task_assign_to}}</td>
+                                    <td>{{$monitoring->ticket_modified_on}}</td>
+                                    <td>
+                                        @php
+                                            $modifiedAt = \Carbon\Carbon::parse($monitoring->ticket_modified_on);
+                                            $now = \Carbon\Carbon::now();
+                                            $diffDays = $modifiedAt->diffInDays($now);
+                                            $diffHours = $modifiedAt->copy()->addDays($diffDays)->diffInHours($now);
+                                            $diffMinutes = $modifiedAt->copy()->addDays($diffDays)->addHours($diffHours)->diffInMinutes($now);
+                                        @endphp
+                                        {{ $diffDays }} hari {{ $diffHours }} jam {{ $diffMinutes }} menit
+                                    </td>
+                                    
                                     <td>{{$monitoring->note}}</td>
                                     <td>
                                         <div class="d-flex gap-2">
