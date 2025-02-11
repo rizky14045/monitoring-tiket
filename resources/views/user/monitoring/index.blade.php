@@ -41,7 +41,7 @@
                                 <th scope="col" class="text-center align-middle">Service Type</th>
                                 <th scope="col" class="text-center align-middle">Ticket Created On</th>
                                 <th scope="col" class="text-center align-middle">Task Assign To</th>
-                                <th scope="col" class="text-center align-middle">Task Modified On</th>
+                                <th scope="col" class="text-center align-middle">Ticket Modified On</th>
                                 <th scope="col" class="text-center align-middle">Durasi</th>
                                 <th scope="col" class="text-center align-middle">Keterangan</th>
                                 <th scope="col" class="text-center align-middle">Action</th>
