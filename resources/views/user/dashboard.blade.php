@@ -79,7 +79,7 @@
                     <div class="border border-dark rounded-2 me-2 widget-icons-sections">
                         <i data-feather="bar-chart" class="widgets-icons"></i>
                     </div>
-                    <h5 class="card-title mb-0">Monitoring</h5>
+                    <h5 class="card-title mb-0">Monitoring by Status</h5>
                 </div>
             </div>
 
@@ -116,7 +116,7 @@
                 <br>
                 <div class="d-flex justify-content-center">
                     <div class="col-12 col-md-9">
-                        <p class="text-center fw-bold">Monitoring Ticket</p>
+                        <p class="text-center fw-bold">Monitoring Ticket by Status</p>
                         <canvas id="chart_2"></canvas>
                     </div>
                 </div>
