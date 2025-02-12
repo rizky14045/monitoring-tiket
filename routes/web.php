@@ -23,6 +23,8 @@ Route::get('/register', function () {
     return view('user.register');
 });
 Route::get('/', [DashboardController::class, 'index'])->name('dashboard.index');
+Route::get('/monitoring-data', [DashboardController::class, 'getMonitoringData'])->name('monitoring.data');
+Route::get('/monitoring-data-second', [DashboardController::class, 'getMonitoringDataSecond'])->name('monitoring.data2');
 Route::get('/report', [DashboardController::class, 'report'])->name('dashboard.report');
 Route::prefix('monitoring')->group(function () {
     Route::get('/', [MonitoringController::class, 'index'])->name('monitoring.index');

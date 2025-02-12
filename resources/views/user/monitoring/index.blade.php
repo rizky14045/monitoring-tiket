@@ -34,11 +34,11 @@
                             <tr>
                                 <th scope="col" class="text-center align-middle">No</th>
                                 <th scope="col" class="text-center align-middle">Incident</th>
-                                <th scope="col" class="text-center align-middle">Priority Name</th>
+                                {{-- <th scope="col" class="text-center align-middle">Priority Name</th> --}}
                                 <th scope="col" class="text-center align-middle">Summary</th>
                                 <th scope="col" class="text-center align-middle">Status</th>
                                 <th scope="col" class="text-center align-middle">Service Family</th>
-                                <th scope="col" class="text-center align-middle">Service Type</th>
+                                {{-- <th scope="col" class="text-center align-middle">Service Type</th> --}}
                                 <th scope="col" class="text-center align-middle">Ticket Created On</th>
                                 <th scope="col" class="text-center align-middle">Task Assign To</th>
                                 <th scope="col" class="text-center align-middle">Ticket Modified On</th>
@@ -58,11 +58,11 @@
                                 <tr class="text-center">
                                     <td>{{ $startNumber + $key }}</td>
                                     <td>{{$monitoring->incident}}</td>
-                                    <td>{{$monitoring->priority_name}}</td>
+                                    {{-- <td>{{$monitoring->priority_name}}</td> --}}
                                     <td>{{$monitoring->summary}}</td>
                                     <td>{{$monitoring->status}}</td>
                                     <td>{{$monitoring->service_family}}</td>
-                                    <td>{{$monitoring->service_type}}</td>
+                                    {{-- <td>{{$monitoring->service_type}}</td> --}}
                                     <td>{{$monitoring->ticket_created_at}}</td>
                                     <td>{{$monitoring->task_assign_to}}</td>
                                     <td>{{$monitoring->ticket_modified_on}}</td>

@@ -10,38 +10,60 @@ use App\Http\Controllers\Controller;
 
 class DashboardController extends Controller
 {
-    public function index(Request $request){
-        
+    public function index(Request $request)
+    {
         $data['services'] = ServiceFamily::all();
-        if ($request->has('start_date') && $request->has('end_date')) {
-            // Ubah start_date dan end_date agar mencakup waktu
-            $startDate = Carbon::parse($request->start_date)->startOfDay(); // 00:00:00
-            $endDate = Carbon::parse($request->end_date)->endOfDay(); // 23:59:59
+        return view('user.dashboard', $data);
+    }
+    public function getMonitoringData(Request $request)
+    {
+        $startDate = Carbon::parse($request->start_date)->startOfDay();
+        $endDate = Carbon::parse($request->end_date)->endOfDay();
         
-            $monitoring = Monitoring::whereBetween('ticket_created_at', [$startDate, $endDate])
+        $monitoring = Monitoring::whereBetween('ticket_created_at', [$startDate, $endDate])
             ->where('status', $request->status)
             ->whereIn('service_family', $request->service_family)
             ->get();
-        
-            // Group by tanggal dan count data
-            $grouped = $monitoring->groupBy(function ($item) {
-                return Carbon::parse($item->ticket_created_at)->format('d F Y'); // Format d F Y
-            });
-        
-            // Siapkan label dan nilai untuk Chart.js
-            $chartLabels = $grouped->keys()->toArray(); // Tanggal dalam format d F Y
-            $chartValues = $grouped->map(function ($items) {
-                return $items->count(); // Hitung jumlah tiket
-            })->values()->toArray();
-        
-            $data['chartLabels'] = $chartLabels;
-            $data['chartValues'] = $chartValues;
-        } else {
-            $data['chartLabels'] = [];
-            $data['chartValues'] = [];
-        }
-        return view('user.dashboard',$data);
+
+        // Group data berdasarkan tanggal
+        $grouped = $monitoring->groupBy(function ($item) {
+            return Carbon::parse($item->ticket_created_at)->format('d F Y');
+        });
+
+        // Siapkan data untuk Chart.js
+        $chartLabels = $grouped->keys()->toArray();
+        $chartValues = $grouped->map(fn($items) => $items->count())->values()->toArray();
+
+        return response()->json([
+            'chartLabels' => $chartLabels,
+            'chartValues' => $chartValues,
+        ]);
     }
+
+    public function getMonitoringDataSecond(Request $request)
+    {
+        $startDate = Carbon::parse($request->start_date_all)->startOfDay();
+        $endDate = Carbon::parse($request->end_date_all)->endOfDay();
+        
+        $monitoring = Monitoring::whereBetween('ticket_created_at', [$startDate, $endDate])
+            ->where('status', $request->status_all)
+            ->get();
+
+        // Group data berdasarkan tanggal
+        $grouped = $monitoring->groupBy(function ($item) {
+            return $item->service_family;
+        });
+
+        // Siapkan data untuk Chart.js
+        $chartLabels = $grouped->keys()->toArray();
+        $chartValues = $grouped->map(fn($items) => $items->count())->values()->toArray();
+
+        return response()->json([
+            'chartLabels' => $chartLabels,
+            'chartValues' => $chartValues,
+        ]);
+    }
+
 
     public function report(Request $request){
         
